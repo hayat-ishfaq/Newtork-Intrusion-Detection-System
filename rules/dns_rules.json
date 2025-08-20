@@ -1,0 +1,201 @@
+{
+  "version": "1.0",
+  "description": "DNS NIDS Detection Rules",
+  "last_updated": "2025-08-09",
+  "rules": [
+    {
+      "id": "DNS-001",
+      "name": "Long Domain Name",
+      "description": "Detect DNS tunneling via long domains",
+      "condition": "qname.length > 100",
+      "severity": "high",
+      "category": "tunneling",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "max_length": 100
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1071/004/"
+      ]
+    },
+    {
+      "id": "DNS-002",
+      "name": "Suspicious Query Types",
+      "description": "Detect suspicious DNS query types commonly used for tunneling",
+      "condition": "qtype in [16,255,10,99,100]",
+      "severity": "medium",
+      "category": "suspicious_query",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "suspicious_types": [16, 255, 10, 99, 100, 101]
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1071/004/"
+      ]
+    },
+    {
+      "id": "DNS-003",
+      "name": "DNS Flooding",
+      "description": "Detect DNS flooding attacks",
+      "condition": "queries_per_sec > 1000",
+      "severity": "high",
+      "category": "flooding",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "max_queries_per_second": 1000,
+        "time_window_seconds": 60
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1498/"
+      ]
+    },
+    {
+      "id": "DNS-004",
+      "name": "Malformed DNS Packets",
+      "description": "Detect malformed DNS packets",
+      "condition": "malformed_header || invalid_lengths || corrupted_data",
+      "severity": "critical",
+      "category": "malformed",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {},
+      "references": [
+        "RFC 1035"
+      ]
+    },
+    {
+      "id": "DNS-005",
+      "name": "DGA Domain Detection",
+      "description": "Detect Domain Generation Algorithm (DGA) domains",
+      "condition": "entropy > 3.5 && length > 10",
+      "severity": "high",
+      "category": "dga",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "min_entropy": 3.5,
+        "min_length": 10,
+        "max_labels": 10
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1568/002/"
+      ]
+    },
+    {
+      "id": "DNS-006",
+      "name": "NXDOMAIN Burst",
+      "description": "Detect NXDOMAIN response bursts indicating reconnaissance",
+      "condition": "nxdomain_rate > 50% && queries > 10",
+      "severity": "medium",
+      "category": "reconnaissance",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "max_nxdomain_rate": 0.5,
+        "min_queries": 10,
+        "time_window_seconds": 60
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1590/"
+      ]
+    },
+    {
+      "id": "DNS-007",
+      "name": "Suspicious Subdomains",
+      "description": "Detect suspicious subdomain patterns",
+      "condition": "subdomain_count > 5 || base64_pattern || hex_pattern",
+      "severity": "medium",
+      "category": "suspicious_pattern",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "max_subdomain_count": 5
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1071/004/"
+      ]
+    },
+    {
+      "id": "DNS-008",
+      "name": "DNS Over HTTPS (DoH) Detection",
+      "description": "Detect DNS over HTTPS traffic patterns",
+      "condition": "destination_port == 443 && dns_pattern_in_https",
+      "severity": "low",
+      "category": "evasion",
+      "enabled": false,
+      "action": "log",
+      "threshold": {},
+      "references": [
+        "https://attack.mitre.org/techniques/T1071/004/"
+      ]
+    },
+    {
+      "id": "DNS-009",
+      "name": "Fast Flux Detection",
+      "description": "Detect fast flux networks with rapid IP changes",
+      "condition": "ip_change_rate > 10 && ttl < 300",
+      "severity": "high",
+      "category": "fast_flux",
+      "enabled": true,
+      "action": "alert",
+      "threshold": {
+        "max_ip_changes_per_hour": 10,
+        "min_ttl": 300
+      },
+      "references": [
+        "https://attack.mitre.org/techniques/T1568/001/"
+      ]
+    },
+    {
+      "id": "DNS-010",
+      "name": "Suspicious TLD Usage",
+      "description": "Detect usage of suspicious or uncommon TLDs",
+      "condition": "tld in suspicious_tlds",
+      "severity": "low",
+      "category": "suspicious_tld",
+      "enabled": true,
+      "action": "log",
+      "threshold": {
+        "suspicious_tlds": [".tk", ".ml", ".ga", ".cf", ".bit", ".onion"]
+      },
+      "references": [
+        "Threat Intelligence Feeds"
+      ]
+    }
+  ],
+  "global_settings": {
+    "max_alerts_per_minute": 1000,
+    "alert_suppression_window": 300,
+    "baseline_learning_period": 3600,
+    "anomaly_detection_sensitivity": 3.0
+  },
+  "whitelist": {
+    "domains": [
+      "google.com",
+      "microsoft.com",
+      "amazon.com",
+      "cloudflare.com",
+      "akamai.com"
+    ],
+    "ips": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1"
+    ],
+    "query_types": [1, 2, 5, 15, 28]
+  },
+  "blacklist": {
+    "domains": [
+      "evil.com",
+      "malware.example",
+      "botnet.net"
+    ],
+    "ips": [
+      "127.0.0.1"
+    ]
+  }
+}

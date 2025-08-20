@@ -1,0 +1,13 @@
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/nids_dns.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/test_nids_dns.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/sample_pcaps.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/run_tests.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/test_run.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/package.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/package_source.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/edit_cache.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/list_install_components.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/install.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/install/local.dir
+/mnt/d/internship/Outsecure-internship/task-2/NIDS/nids_dns/build/CMakeFiles/install/strip.dir

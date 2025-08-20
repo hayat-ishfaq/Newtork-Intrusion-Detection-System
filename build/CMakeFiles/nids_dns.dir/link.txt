@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/nids_dns.dir/src/main.cpp.o CMakeFiles/nids_dns.dir/src/dns_parser.cpp.o CMakeFiles/nids_dns.dir/src/detector.cpp.o CMakeFiles/nids_dns.dir/src/packet_capture.cpp.o CMakeFiles/nids_dns.dir/src/utils.cpp.o -o nids_dns  -lpcap 
